@@ -14,6 +14,8 @@ class PlaylistComparer:
     def __init__(self, path1: Path, path2: Path):
         self.path1 = path1
         self.path2 = path2
+        self.name1 = self.path1.stem
+        self.name2 = self.path2.stem
         self.df1 = load_playlist(self.path1)
         self.df2 = load_playlist(self.path2)
 
@@ -64,11 +66,11 @@ class PlaylistComparer:
 
         logger.info(
             f"Found {len(common)} common tracks, "
-            f"{len(only_in_1)} only in first, "
-            f"{len(only_in_2)} only in second"
+            f"{len(only_in_1)} only in {self.name1}, "
+            f"{len(only_in_2)} only in {self.name2}"
         )
 
-        return {'common': common, 'only_in_1': only_in_1, 'only_in_2': only_in_2}
+        return {'common': common, f'{self.name1}_uniques': only_in_1, f'{self.name2}_uniques': only_in_2}
 
     @staticmethod
     def normalize_name(text: str) -> str:
