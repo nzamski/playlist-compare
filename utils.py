@@ -21,7 +21,9 @@ def load_playlist(file_path: Path) -> DataFrame:
     return df
 
 
-def save_playlist(df: DataFrame, file_path: Path) -> None:
+def save_playlist(df: DataFrame, file_path: Path, columns: list = None) -> None:
+    if columns is not None:
+        df = df[columns]
     df.to_csv(
         file_path,
         sep='\t',
